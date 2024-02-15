@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Providencia informações gerais sobre o documento -->
+<head>
+
+    <!-- Definição da codificação de caracteres -->
+    <meta charset="UTF-8">
+
+    <!-- Configura a exibição da página (largura e escala) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Inclui o script do arquivo phaser.js obtido por meio do endereço web -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+
+    <!-- Título da página -->
+    <title> Exercício do Pássaro </title>
+
+    <!-- Contém informações e estilo para o site -->
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;  }
+    </style>
+</head>
+
+<!-- Representa o conteúdo de um documento HTML -->
+<body>
+
+<!-- Usado para incluir ou referenciar um script executável -->
+<script>
+
+    // A variavel "config" configura a tela do site, como o tamanho e os códigos inceridos nela
+    var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+    var passarinho;
+
+    // A função preload() é usada para lidar com o carregamento de arquivos externos.
+    function preload() {
+        this.load.image('bg', 'assets/bg_space.png');
+        this.load.spritesheet('bird', 'assets/bird-purple.png', { frameWidth: 75, frameHeight: 75 });
+    }
+
+    // A função create() adiciona as imagens à tela, de forma que podemos editar a posição onde as imagems aparece e sua escala também.
+    function create() {
+        this.add.image(400, 300, 'bg').setScale(1.2);
+        passarinho = this.add.sprite(100, 500, 'bird').setScale(1.3);
+
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('bird', { stars: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        passarinho.anims.play('fly', true);
+
+    }
+
+    // A função update() permite atualizar qualquer objeto dentra página
+    function update() {
+
+        // Quando o passarinho está na posição 500 no eixo y seu "momento" é sobe
+        if (passarinho.y === 500) {
+            passarinho.sobe = true;
+        }
+        // O fato da posição do passarinho ser maior que 100 no eixo y e o passarinho estar no "momento" de sobe, são condições que fazem com que ele se desloque para cima até chagar na posição 500
+        if (passarinho.y > 100 && passarinho.sobe === true){
+            passarinho.y -= 0.5;
+        } 
+
+        // Quando o passarinho está na posição 100 no eixo y seu "momento" é desce
+        if (passarinho.y === 100) {
+            passarinho.sobe = false;
+        }
+
+        // O fato da posição do passarinho ser menor que 500 no eixo y e o passarinho estar no "momento" de desce, são condições que fazem com que ele se desloque para baixo até chagar na posição 100
+        if (passarinho.y < 500 && passarinho.sobe === false) {
+            passarinho.y += 0.5;
+        }
+
+
+        
+        // Quando o passarinho está na posição no eixo x 100 seu "momento" é ida
+        if (passarinho.x === 100) {
+            passarinho.setFlip(false, false);
+            passarinho.ida = true;
+        }
+
+        // O fato da posição do passarinho ser menor que 700 no eixo x e o passarinho estar no "momento" de ida, são condições que fazem com que ele se desloque para a esquerda até chagar na posição 700
+        if (passarinho.x < 700 && passarinho.ida === true) {
+            console.log("Nessa etapa o passarinho sai da posição 100 e se desloca para a direita de 4 em 4 até chegar na posição 700.");
+            passarinho.x += 4;
+        } 
+       
+        // Quando o passarinho está na posição 700 no eixo x seu "momento" é volta
+        if (passarinho.x === 700) {
+            passarinho.setFlip(true,false);
+            passarinho.ida = false;
+        }
+
+        // O fato da posição do passarinho ser mair que 100 no eixo x e o passarinho estar no "momento" de volta, são condições que fazem com que ele se desloque para a esquerda até chagar na posição 100
+        if (passarinho.x > 100 && passarinho.ida === false) {
+            console.log("Nessa próxima etapa o passarinho está na posição 700 e se descola para a esquerda de 4 em 4 até chegar na posição 100.");
+            passarinho.x -= 4;
+        }
+
+        }
+
+</script> 
+
+</body>
+</html> 
