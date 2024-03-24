@@ -77,25 +77,28 @@
 
         // Quando o passarinho está na posição 500 no eixo y seu "momento" é sobe
         if (passarinho.y === 500) {
-            passarinho.sobe = true;
+        passarinho.sobe = true;
         }
         // O fato da posição do passarinho ser maior que 100 no eixo y e o passarinho estar no "momento" de sobe, são condições que fazem com que ele se desloque para cima até chagar na posição 500
-        if (passarinho.y > 100 && passarinho.sobe === true){
+        while (passarinho.y > 100 && passarinho.sobe === true){
             passarinho.y -= 0.5;
+            break
         } 
 
         // Quando o passarinho está na posição 100 no eixo y seu "momento" é desce
         if (passarinho.y === 100) {
-            passarinho.sobe = false;
+        passarinho.sobe = false;
         }
 
         // O fato da posição do passarinho ser menor que 500 no eixo y e o passarinho estar no "momento" de desce, são condições que fazem com que ele se desloque para baixo até chagar na posição 100
-        if (passarinho.y < 500 && passarinho.sobe === false) {
-            passarinho.y += 0.5;
-        }
-
-
+        while (passarinho.y < 500 && passarinho.sobe === false) {
+        passarinho.y += 0.5;
+        break
+    }
         
+
+
+
         // Quando o passarinho está na posição no eixo x 100 seu "momento" é ida
         if (passarinho.x === 100) {
             passarinho.setFlip(false, false);
@@ -125,4 +128,4 @@
 </script> 
 
 </body>
-</html> 
+</html>
